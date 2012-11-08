@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <script type='text/javascript' src="jquery.js"></script>
+        <script type='text/javascript' src='knockout-2.2.0.js'></script>
+        <script type='text/javascript' src="knockout-ex.js"></script>
+
+    </head>
+<body>
+<h2>BART fare calculator</h2>
+
+<table>
+    <thead><tr>
+        <th>Origin Station</th><th>Destination Station</th><th>Fare</th><th></th>
+    </tr></thead>
+    <tbody>
+        <tr>
+            <td><select data-bind="options: $root.stations, value: originStation, optionsText: 'stationName'" /></td>
+            <td><select data-bind="options: $root.stations, value: destinationStation, optionsText: 'stationName'"></select></td>
+            <td data-bind="text: formattedPrice"></td>
+        </tr>    
+    </tbody>
+</table>
+
+</body>
+</html>
