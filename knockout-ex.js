@@ -1,25 +1,35 @@
 
-// Overall viewmodel for this screen, along with initial state
 function FareCalculationModel() {
-    var self = this;
 
-    // Non-editable catalog data - would come from the server
-    self.stations = [
+    this.stations = [
         { stationName: "12th"},
         { stationName: "16th"},
         { stationName: "19th"}
     ];    
 
-    self.originStation = ko.observable(self.stations[0]);
-    self.destinationStation = ko.observable(self.stations[1]);
+    this.originStation = ko.observable(this.stations[0]);
 
-    self.formattedPrice = ko.computed(function() {
-        return 1; 
-    }); 
+    this.destinationStation = ko.observable(this.stations[1]);
 
+    this.formattedPrice = ko.computed(function(){
+        //console.log(this.originStation() + this.destinationStation());
+        var fare = "n/a";
+        $.ajax({
+            type: "GET",
+            dataType: "xml",
+            url: "http://api.bart.gov/api/sched.aspx?cmd=fare&orig="+this.originStation().stationName+"&dest="+this.destinationStation().stationName+"&key=MW9S-E7SL-26DU-VV8V",
+            success: function(xml)  {
+                console.log(xml);
+                $(xml).find("trip").each(function(){
+                    fare = $(this).find('fare').text();
+                    alert(fare);
+
+                });
+            }
+        });
+        return fare;
+        },this); 
     }    
-    // // Editable data
-
 
 
 $(document).ready(function() {
